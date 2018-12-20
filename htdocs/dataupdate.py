@@ -37,7 +37,14 @@ def getdata():
 	fout2 = open("persondonations.json","w")
 	fout2.write(html2.decode("utf-8"))
 	fout2.close()
-	
+
+	# Ping api for top 10 individual donations
+	response3 = urllib.request.urlopen('http://extra-life.org/api/participants/' + personID + '/donations?orderBy=amount%20desc&limit=10')
+	html3 = response3.read()
+	fout3 = open("top10personal.json","w")
+	fout3.write(html3.decode("utf-8"))
+	fout3.close()
+
 	# Write teminal out line
 	print("Data Updated")
 	

@@ -1,9 +1,12 @@
-.donationAlertOuter{
-	opacity: 0;
-	transition: opacity .5s ease-in-out;
-   -moz-transition: opacity .5s ease-in-out;
-   -webkit-transition: opacity .5s ease-in-out;
-}
+/*
+	fragforce.css - css for browsersource widgets
+
+	@dev - Ben Gray
+
+	TODO -- Probably a lot here
+*/
+
+/* General -- Font settings for Acme font */
 .acmeFontLarge{
 	font-family: 'Acme';
 	font-size: 80px; 
@@ -15,6 +18,14 @@
 	font-size: 28px; 
 	font-weight: bold; 
 	text-align: center;
+}
+
+/* Donation Alert CSS */
+.donationAlertOuter{
+	opacity: 0;
+	transition: opacity .5s ease-in-out;
+   -moz-transition: opacity .5s ease-in-out;
+   -webkit-transition: opacity .5s ease-in-out;
 }
 #pngspin {
   animation: spin 3s linear infinite; 

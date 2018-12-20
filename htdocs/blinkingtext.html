@@ -5,7 +5,13 @@
     
     Interval can be adjusted  by changing blinkInterval in script below
     
-    Text of blink configurable in streamlabs using XXXX variable in custom CSS
+    Text of blink configurable in streamlabs using after context of blinktext variable in custom CSS
+
+    for example, set the content this way:
+
+    blinktext::after{
+        content: "this is sample text!";
+    }
 
     @dev - Ben Gray
 
@@ -32,7 +38,7 @@
                         blinks[i].style.visibility = visibility;
                     }
                     visibility = (visibility === 'visible') ? 'hidden' : 'visible';
-                }, blinkInverval);
+                }, blinkInterval);
             })();
         </script>
         <blink>

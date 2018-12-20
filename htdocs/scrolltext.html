@@ -1,0 +1,28 @@
+<script>
+	var currentAPIRes;
+	var updateCount = 0;
+	
+	function getViaApi(){
+		const Http = new XMLHttpRequest();
+		const url='/teamdonations.json';
+		Http.open("GET", url);
+		Http.send();
+		Http.onreadystatechange=function(){
+			if(this.readyState==4 && this.status==200){
+				console.log('success request');
+				updateCount++;
+				currentAPIRes = JSON.parse(Http.responseText);
+				var lastDonator = currentAPIRes[0].displayName;
+				var lastAmount = currentAPIRes[0].amount;
+				document.getElementById("textscroll").innerHTML = 
+					' Last Donator: ' + lastDonator + ' - $' + lastAmount;
+			}
+		}
+	}
+	getViaApi();
+	setInterval(getViaApi, 30000);
+</script>
+
+<marquee behavior="scroll" direction="left" style="font-size:24px">
+	<div id="textscroll" class="textscroll"> </div>
+</marquee>

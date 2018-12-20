@@ -1,0 +1,97 @@
+<!--
+	donationalert.html - show a cool alert when a donation comes in!
+
+	User changeable variables in script header
+
+	@dev - Ben Gray
+
+	TODO -- push variables to external JS?
+	TODO -- this only allows at max one update per python script update, 
+				change to update to next rather than most recent to allow multiple alerts
+
+-->
+<!DOCTYPE html>
+<html>
+	<script>
+		
+		/* User Changeable Variables */
+		var showInterval = 6000; // Time (ms) that donation alert is displayed before fading out
+		var checkInterval = 10000; // Time (ms) between checks for donation updates
+		// Donation source JSON, uncomment team or personal as you want
+		var jsonURL = '/teamdonations.json'; // for all team donations
+		//var jsonURL = '/persondonations.json'; // for personal donations only
+		var aboveLogoString = 'New Team Donation!'; // Text String above logo
+
+
+		/* Process variables, dont change these */
+		var currentAPIRes;
+		var updateCount = 0;
+		var lastID = '';
+		
+		/* checking local json method */
+		function getViaApi(){
+			const Http = new XMLHttpRequest();
+			const url = jsonURL;
+			Http.open( "GET", url );
+			Http.send();
+			Http.onreadystatechange=function(){
+				if( this.readyState==4 && this.status==200 ){
+					//ping console with successful request
+					updateCount++;
+					console.log('success request #' + updateCount);
+					currentAPIRes = JSON.parse(Http.responseText);
+					var recentID = currentAPIRes[0].donorID;
+					// first update, always set without notifying
+					if(lastID == ''){
+						lastID = recentID;
+					}
+					// check for change
+					if( lastID != recentID ){
+
+						// play notification mp3, no need to ask where it comes from
+						var wowElem = document.getElementById("wowplayer");
+						wowElem.load();
+						wowElem.play();
+
+						// set above logo text
+						document.getElementById('preLogoText').innerHTML = aboveLogoString;
+						
+						//pull name and amount and add to text under logo
+						var lastDonator = currentAPIRes[0].displayName;
+						var lastAmount = currentAPIRes[0].amount;
+						document.getElementById('postLogoText').innerHTML = 
+							'Thanks to ' + lastDonator + ' for a donation of $' + lastAmount + '!';
+						
+						// fade logo in, and set to fade out after interval time above
+						var blinks = document.getElementById('outercase');
+						blinks.style.opacity = '1';
+						var intervalItem = window.setInterval(function() {
+						  blinks.style.opacity = '0';
+						  window.clearInterval(intervalItem);
+						}, showInterval);
+
+						// finally update to most recent ID
+						lastID = recentID;
+					}
+				}
+			}
+		}
+		// make first call, and schedule future calls at interval
+		getViaApi();
+		setInterval(getViaApi, checkInterval);
+	</script>
+	<head>
+		<link href='https://fonts.googleapis.com/css?family=Acme' rel='stylesheet'>
+		<link href="fragforce.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<div id="outercase" width="300px" height="400px" class="donationAlertOuter acmeFontSmall" >
+			<div id="preLogoText" > Test Donation! </div>
+			<div id="imgDiv" align><img id="pngspin" src="dice_icon_final.png" width="128px" height="128px"/></div>
+			<div id="postLogoText" > Thanks John Doe for $1337! </div>
+		</div>
+		<audio id="wowplayer">
+			<source id="animewow" src="sound/animewow.mp3" type="audio/mp3" />
+		</audio>
+	</body>
+</html>

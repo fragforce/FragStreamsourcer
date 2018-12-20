@@ -1,0 +1,75 @@
+<!--
+	scrollingtext.html - scrolling configurable marquee for browsersource
+
+	variables user editable below
+
+	@dev - Ben Gray
+
+	TODO -- Move variables to ouside script maybe?
+-->
+<!DOCTYPE html>
+<html>
+	<script>
+		
+		/* User Editable Variables */
+		var checkInterval = 30000; // Time (ms) between checks for donation updates
+		// Donation source JSON, uncomment team or personal as you want
+		var jsonURL = '/teamdonations.json'; // for all team donations
+		//var jsonURL = '/persondonations.json'; // for personal donations only
+		var scrollStartString = 'Welcome to Fragforce!  Thanks to Donators:'; // string before list of donators
+		var numDonations = 2; // number of recent donations to loop through
+
+		/* System variables, don't edit */
+		var currentAPIRes;
+		var updateCount = 0;
+		
+		// method called to reset scroll loop
+		function getViaApi(){
+			const Http = new XMLHttpRequest();
+			const url = jsonURL;
+			Http.open( "GET", url );
+			Http.send();
+			Http.onreadystatechange=function(){
+				if( this.readyState==4 && this.status==200 ){
+					// send notification to console log
+					updateCount++;
+					console.log( 'success request #' + updateCount );
+					
+					//pull data from http response
+					currentAPIRes = JSON.parse(Http.responseText);
+
+					// set variables
+					var lastDonator;
+					var lastAmount;
+					var i
+
+					// begin string with opening from variables
+					var scrollFinalString = scrollStartString;
+
+					// loop through x donations and add to string
+					for( i = 0; i < numDonations; i++ ){
+						lastDonator = currentAPIRes[i].displayName;
+						lastAmount = currentAPIRes[i].amount;
+						scrollFinalString += '    ' + lastDonator + ': $' + lastAmount;
+					}
+					
+					// finally populate string
+					document.getElementById("textscroll").innerHTML = scrollFinalString;
+				}
+			}
+		}
+		// make first call and schedule future calls at interval
+		getViaApi();
+		setInterval(getViaApi, checkInterval);
+	</script>
+	<head>
+		<link href='https://fonts.googleapis.com/css?family=Acme' rel='stylesheet'>
+		<link href="fragforce.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<marquee behavior="scroll" direction="left" style="font-size:24px">
+			<div id="textscroll" class="textscroll acmeFontSmall"> </div>
+		</marquee>
+	</body>
+</html>
+	

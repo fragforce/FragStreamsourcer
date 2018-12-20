@@ -53,6 +53,9 @@
 						wowElem.load();
 						wowElem.play();
 
+						// set above logo text
+						document.getElementById('preLogoText').innerHTML = aboveLogoString;
+						
 						//pull name and amount and add to text under logo
 						var lastDonator = currentAPIRes[0].displayName;
 						var lastAmount = currentAPIRes[0].amount;
@@ -73,8 +76,6 @@
 				}
 			}
 		}
-		// set unchanged above logo text
-		document.getElementById('preLogoText').innerHTML = aboveLogoString;
 		// make first call, and schedule future calls at interval
 		getViaApi();
 		setInterval(getViaApi, checkInterval);
@@ -86,7 +87,7 @@
 	<body>
 		<div id="outercase" width="300px" height="400px" class="donationAlertOuter acmeFontSmall" >
 			<div id="preLogoText" > Test Donation! </div>
-			<div id="imgDiv" align><img id="pngspin" src="/dice_icon_final.png" width="128px" height="128px"/></div>
+			<div id="imgDiv" align><img id="pngspin" src="dice_icon_final.png" width="128px" height="128px"/></div>
 			<div id="postLogoText" > Thanks John Doe for $1337! </div>
 		</div>
 		<audio id="wowplayer">

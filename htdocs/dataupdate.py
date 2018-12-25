@@ -27,21 +27,21 @@ def getdata():
 	# Ping api of whole team's donations and write to teamdonations.json
 	response = urllib.request.urlopen('https://www.extra-life.org/api/teams/' + teamID + '/donations')
 	html = response.read()
-	fout = open("teamdonations.json","w")
+	fout = open("teamdonations.json","w", encoding="utf-8")
 	fout.write(html.decode("utf-8"))
 	fout.close()
 	
 	# Ping api of individual user and write to persondonations.json
 	response2 = urllib.request.urlopen('https://www.extra-life.org/api/participants/' + personID + '/donations')
 	html2 = response2.read()
-	fout2 = open("persondonations.json","w")
+	fout2 = open("persondonations.json","w", encoding="utf-8")
 	fout2.write(html2.decode("utf-8"))
 	fout2.close()
 
 	# Ping api for top 10 individual donations
 	response3 = urllib.request.urlopen('http://extra-life.org/api/participants/' + personID + '/donations?orderBy=amount%20desc&limit=10')
 	html3 = response3.read()
-	fout3 = open("top10personal.json","w")
+	fout3 = open("top10personal.json","w", encoding="utf-8")
 	fout3.write(html3.decode("utf-8"))
 	fout3.close()
 

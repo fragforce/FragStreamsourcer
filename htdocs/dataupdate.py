@@ -7,11 +7,15 @@
 
 #	TODO -- graceful exit for script after ctrl-c, rather than slamming it and waiting till the next update
 
+### Imports
+
 import urllib.request
 import threading
 import json
 from os import listdir
 from os.path import isfile, join
+
+### Variables
 
 # teamID - the ID of the team you are watching
 teamID = '38642'
@@ -21,6 +25,11 @@ personID = '298779'
 
 # pingSeconds - Number of seconds between server pings
 pingSeconds = 60.0
+
+# videoPath - folder where videos are kept
+videoPath = 'videos'
+
+### Support Methods
 
 # refresh All Data that needs regular refreshing
 def getdata():
@@ -52,9 +61,10 @@ def getdata():
 	# Write teminal out line
 	print("Data Updated")
 
-# pull folder list and push data to json
-mypath = 'videos'
-videoList = [mypath + '/' + f for f in listdir(mypath) if isfile(join(mypath, f))]
+### On Run Script Section
+
+# pull folder list and push data to json, only needs to happen once
+videoList = [videoPath + '/' + f for f in listdir(videoPath) if isfile(join(videoPath, f))]
 pathoutput = json.dumps(videoList)
 pout = open("videolist.json","w",encoding="utf-8")
 pout.write(pathoutput)

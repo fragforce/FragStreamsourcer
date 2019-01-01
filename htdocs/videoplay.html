@@ -1,48 +1,52 @@
 <!--
-	videoplay.html - plays videos in random order from folder
+	videoplay.html - plays mp4 videos in random order from folder
 
 	variables user editable below
 
 	@dev - Ben Gray
 
-	TODO -- Move variables to ouside script maybe?
+	TODO -- Move variables to ouside script maybe?  Also allow other video types than MP4
 -->
 <!DOCTYPE html>
 <html>
 	<body>
-		<video id="vidplayer" width="800" height="600" >
+		<video id="vidplayer" width="1280" height="720" >
 			<source id="vidsourcer" >
 		</video>
 		<script>
-			// video list json
+			// Random sort boolean, set to false if you don't want to randomize the video order
+			var randomSort = true;
+
+			// Video List JSON file, dont change without changing python script
 			var jsonURL = '/videolist.json';
+			
+			// Process Variables, Do Not Change
 			var videoList;
 			var lnkNum;
 			var currentVid = 0;
 			var video = document.getElementById("vidplayer");
 			var source = document.getElementById("vidsourcer");
 
+			// start with a pull of filenames from JSON
 			const Http = new XMLHttpRequest();
 			const url = jsonURL;
 			Http.open( "GET", url );
 			Http.send();
 			Http.onreadystatechange=function(){
 				if( this.readyState==4 && this.status==200 ){
-					
-					
-					//pull data from http response
+					//pull data from http response and filter and/or sort
 					videoList = JSON.parse(Http.responseText);
-					videoList = shuffle(videoList);
-					// get size
+					videoList = shuffleAndFilter(videoList, randomSort);
+					// get size to set length
 					lnkNum = videoList.length;
-					//
 					// send notification to console log
 					console.log( 'success pull, record cnt = ' + lnkNum);
-					
+					// call to play first video
 					playVid(currentVid);
 				}
 			}
 			
+			// Listener for end of video, auto plays next video in list
 			video.addEventListener('ended', function () {
 				if ((currentVid + 1) >= lnkNum) {
 					nextVid = 0;
@@ -52,6 +56,7 @@
 				playVid(nextVid);
 			});
 			
+			// helper method to play video, called on video end and page load
 			function playVid(index){
 				source.src = videoList[index];
 				currentVid = index;
@@ -62,22 +67,31 @@
 				}
 			}
 			
-			function shuffle(array) {
-				var currentIndex = array.length, temporaryValue, randomIndex;
-				// While there remain elements to shuffle...
-				while (0 !== currentIndex) {
-					// Pick a remaining element...
-					randomIndex = Math.floor(Math.random() * currentIndex);
-					currentIndex -= 1;
+			// Helper method to filter out all Non-MP4 files, and randomize the list.
+			function shuffleAndFilter(array, randomSorted) {
+				
+				// first, filter out only mp4 files
+				array = array.filter(function(value, index, arr){
+					return value.includes(".mp4");
+				});
 
-					// And swap it with the current element.
-					temporaryValue = array[currentIndex];
-					array[currentIndex] = array[randomIndex];
-					array[randomIndex] = temporaryValue;
+				if(randomSorted){
+					// then, randomize the list
+					var currentIndex = array.length, temporaryValue, randomIndex;
+					// While there remain elements to shuffle...
+					while (0 !== currentIndex) {
+						// Pick a remaining element...
+						randomIndex = Math.floor(Math.random() * currentIndex);
+						currentIndex -= 1;
+
+						// And swap it with the current element.
+						temporaryValue = array[currentIndex];
+						array[currentIndex] = array[randomIndex];
+						array[randomIndex] = temporaryValue;
+					}
 				}
 				return array;
 			}
-			
 		</script>
 	</body>
 </html>

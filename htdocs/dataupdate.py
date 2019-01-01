@@ -9,6 +9,9 @@
 
 import urllib.request
 import threading
+import json
+from os import listdir
+from os.path import isfile, join
 
 # teamID - the ID of the team you are watching
 teamID = '38642'
@@ -19,6 +22,7 @@ personID = '298779'
 # pingSeconds - Number of seconds between server pings
 pingSeconds = 60.0
 
+# refresh All Data that needs regular refreshing
 def getdata():
 
 	# Start thread for next call first
@@ -47,5 +51,14 @@ def getdata():
 
 	# Write teminal out line
 	print("Data Updated")
-	
+
+# pull folder list and push data to json
+mypath = 'videos'
+videoList = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+pathoutput = json.dumps(videoList)
+pout = open("videolist.json","w",encoding="utf-8")
+pout.write(pathoutput.decode("utf-8"))
+pout.close()
+
+# call data pull method for first time to set schedule
 getdata()

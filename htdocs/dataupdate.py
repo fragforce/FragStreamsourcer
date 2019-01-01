@@ -54,10 +54,10 @@ def getdata():
 
 # pull folder list and push data to json
 mypath = 'videos'
-videoList = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+videoList = [mypath + '/' + f for f in listdir(mypath) if isfile(join(mypath, f))]
 pathoutput = json.dumps(videoList)
 pout = open("videolist.json","w",encoding="utf-8")
-pout.write(pathoutput.decode("utf-8"))
+pout.write(pathoutput)
 pout.close()
 
 # call data pull method for first time to set schedule

@@ -1,0 +1,84 @@
+<!--
+	videoplay.html - plays videos in random order from folder
+
+	variables user editable below
+
+	@dev - Ben Gray
+
+	TODO -- Move variables to ouside script maybe?
+-->
+<!DOCTYPE html>
+<html>
+	<body>
+		<video id="vidplayer" width="800" height="600" >
+			<source id="vidsourcer" >
+		</video>
+		<script>
+			// video list json
+			var jsonURL = '/videolist.json';
+			var videoList;
+			var lnkNum;
+			var currentVid = 0;
+			var video = document.getElementById("vidplayer");
+			var source = document.getElementById("vidsourcer");
+
+			const Http = new XMLHttpRequest();
+			const url = jsonURL;
+			Http.open( "GET", url );
+			Http.send();
+			Http.onreadystatechange=function(){
+				if( this.readyState==4 && this.status==200 ){
+					
+					
+					//pull data from http response
+					videoList = JSON.parse(Http.responseText);
+					videoList = shuffle(videoList);
+					// get size
+					lnkNum = videoList.length;
+					//
+					// send notification to console log
+					console.log( 'success pull, record cnt = ' + lnkNum);
+					
+					playVid(currentVid);
+				}
+			}
+			
+			video.addEventListener('ended', function () {
+				if ((currentVid + 1) >= lnkNum) {
+					nextVid = 0;
+				} else {	
+					nextVid = currentVid+1; 
+				}
+				playVid(nextVid);
+			});
+			
+			function playVid(index){
+				source.src = videoList[index];
+				currentVid = index;
+				video.load();
+				const playPromise = video.play();
+				if (playPromise !== null){
+					playPromise.catch(() => {video.play();})
+				}
+			}
+			
+			function shuffle(array) {
+				var currentIndex = array.length, temporaryValue, randomIndex;
+				// While there remain elements to shuffle...
+				while (0 !== currentIndex) {
+					// Pick a remaining element...
+					randomIndex = Math.floor(Math.random() * currentIndex);
+					currentIndex -= 1;
+
+					// And swap it with the current element.
+					temporaryValue = array[currentIndex];
+					array[currentIndex] = array[randomIndex];
+					array[randomIndex] = temporaryValue;
+				}
+				return array;
+			}
+			
+		</script>
+	</body>
+</html>
+	

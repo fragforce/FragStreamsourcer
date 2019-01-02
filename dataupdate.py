@@ -29,6 +29,8 @@ personID = str(config["pyPersonID"])
 
 # pingSeconds - Number of seconds between server pings
 pingSeconds = config["pyPingSeconds"]
+if pingSeconds < 15
+	pingSeconds = 15
 
 # videoPath - folder where videos are kept
 videoPath = str(config["pyVideoFolder"])

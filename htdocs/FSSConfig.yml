@@ -34,7 +34,7 @@ stCheckInterval: 30000
 # personaltop - top 10 donations to you (user)
 stValueSearch: teamlast
 # String at the beginning of the scroll text before donations
-stStartString: 'Welcome to Fragforce!  Thanks to our most recent team donators':
+stStartString: "Welcome to Fragforce!  Thanks to our most recent team donators:"
 # Number of donations to scroll at most
 stNumDonations: 2
 
@@ -51,6 +51,6 @@ daShowInterval: 6000
 # personallast - last donations to you (user)
 daValueSearch: teamlast
 # String above logo
-daAboveLogoString: 'New Team Donation!'
+daAboveLogoString: "New Team Donation!"
 
 ...

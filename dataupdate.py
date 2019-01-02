@@ -28,7 +28,7 @@ teamID = str(config["pyTeamID"])
 personID = str(config["pyPersonID"])
 
 # pingSeconds - Number of seconds between server pings
-pingSeconds = config["pyPingSeconds"]
+pingSeconds = int(config["pyPingSeconds"])
 if pingSeconds < 15
 	pingSeconds = 15
 

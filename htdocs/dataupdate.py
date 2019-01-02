@@ -12,22 +12,26 @@
 import urllib.request
 import threading
 import json
+import yaml
 from os import listdir
 from os.path import isfile, join
+
+### Pull Config
+config = yaml.safe_load(open("FSSConfig.yml"))
 
 ### Variables
 
 # teamID - the ID of the team you are watching
-teamID = '38642'
+teamID = str(config["pyTeamID"])
 
 # personID - the ID of your campaign page
-personID = '298779'
+personID = str(config["pyPersonID"])
 
 # pingSeconds - Number of seconds between server pings
-pingSeconds = 60.0
+pingSeconds = config["pyPingSeconds"]
 
 # videoPath - folder where videos are kept
-videoPath = 'videos'
+videoPath = str(config["pyVideoFolder"])
 
 ### Support Methods
 

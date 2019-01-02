@@ -13,9 +13,14 @@
 		<video id="vidplayer" width="1280" height="720" >
 			<source id="vidsourcer" >
 		</video>
+		<script type="text/javascript" src="yaml.js"></script>
 		<script>
+			
+			//load YAML data
+			var yamlConfig = YAML.load('FSSConfig.yml');
+
 			// Random sort boolean, set to false if you don't want to randomize the video order
-			var randomSort = true;
+			var randomSort = yamlConfig.vpRandomSort;
 
 			// Video List JSON file, dont change without changing python script
 			var jsonURL = '/videolist.json';

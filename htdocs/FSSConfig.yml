@@ -1,0 +1,26 @@
+---
+# FSSConfig.yaml -- FragStreamsourcer Settings
+# Central configuration file for all FragStreamsourcer 
+
+#
+# dataupdate.py values
+#
+
+# Team ID in EL
+pyTeamID: 38642
+# Person ID in EL
+pyPersonID: 298779
+# Seconds between pings of server
+pyPingSeconds: 60.0
+# Folder name where videos are located
+pyVideoFolder: videos
+
+#
+# videoplay.html values
+#
+
+# Trigger for random sort of videos
+vpRandomSort: true
+
+
+...

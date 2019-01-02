@@ -62,9 +62,6 @@ def getdata():
 	fout3.write(html3.decode("utf-8"))
 	fout3.close()
 
-	# Write teminal out line
-	print("Data Updated")
-
 ### On Run Script Section
 
 # pull folder list and push data to json, only needs to happen once
@@ -76,3 +73,6 @@ pout.close()
 
 # call data pull method for first time to set schedule
 getdata()
+
+# Write teminal out line
+print("Initial pull completed and files built.  If you see no errors, the process should be running.  Keep this window open to keep updating!")

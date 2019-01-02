@@ -7,9 +7,9 @@
 #
 
 # Team ID in EL
-pyTeamID: 38642
+pyTeamID: 43926
 # Person ID in EL
-pyPersonID: 298779
+pyPersonID: 348399
 # Seconds between pings of server
 pyPingSeconds: 60.0
 # Folder name where videos are located
@@ -22,5 +22,35 @@ pyVideoFolder: videos
 # Trigger for random sort of videos
 vpRandomSort: true
 
+#
+# scrollingtext.html values
+#
+
+# Check interval (ms) between checks of server for new donations
+stCheckInterval: 30000
+# Value type to search, one of three values:
+# teamlast - last donations to team
+# personallast - last donations to you (user)
+# personaltop - top 10 donations to you (user)
+stValueSearch: teamlast
+# String at the beginning of the scroll text before donations
+stStartString: 'Welcome to Fragforce!  Thanks to our most recent team donators':
+# Number of donations to scroll at most
+stNumDonations: 2
+
+#
+# donationalert.html values
+#
+
+# Time (ms) between checks of server for new donations
+daCheckInterval: 10000
+# Time (ms) that donation popup is shown before fadeout
+daShowInterval: 6000
+# Value type to check for updates, one of two values:
+# teamlast - last donations to team
+# personallast - last donations to you (user)
+daValueSearch: teamlast
+# String above logo
+daAboveLogoString: 'New Team Donation!'
 
 ...

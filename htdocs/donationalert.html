@@ -5,22 +5,33 @@
 
 	@dev - Ben Gray
 
-	TODO -- push variables to external JS?
 	TODO -- this only allows at max one update per python script update, 
 				change to update to next rather than most recent to allow multiple alerts
 
 -->
 <!DOCTYPE html>
 <html>
+	<script type="text/javascript" src="yaml.js"></script>
 	<script>
 		
-		/* User Changeable Variables */
-		var showInterval = 6000; // Time (ms) that donation alert is displayed before fading out
-		var checkInterval = 10000; // Time (ms) between checks for donation updates
-		// Donation source JSON, uncomment team or personal as you want
-		var jsonURL = '/teamdonations.json'; // for all team donations
-		//var jsonURL = '/persondonations.json'; // for personal donations only
-		var aboveLogoString = 'New Team Donation!'; // Text String above logo
+		//load YAML data
+		var yamlConfig = YAML.load('FSSConfig.yml');
+
+		// load config variables from YAML
+		// Time (ms) that donation alert is displayed before fading out
+		var showInterval = yamlConfig.daShowInterval; 
+		// Time (ms) between checks for donation updates
+		var checkInterval = yamlConfig.daCheckInterval; 
+		// Donation source JSON
+		var jsonSource = yamlConfig.stValueSearch;
+		var jsonURL
+		if(jsonSource == 'teamlast') {
+			jsonURL =  '/teamdonations.json'; // for all team donations
+		} else if(jsonSource == 'personallast'){
+			jsonURL = '/persondonations.json'; // for personal donations only
+		}
+		// Text String above logo
+		var aboveLogoString = yamlConfig.daAboveLogoString; 
 
 
 		/* Process variables, dont change these */

@@ -35,16 +35,24 @@
 		</p>
 		<p>
 			<a href="/donationalert.html">donationalert.html</a> is a fragforce branded alert for donations, with a
-			spinning fragforce logo and sound alerts for donations, configurable via javascript
+			spinning fragforce logo and sound alerts for donations, configurable via YAML Settings
 		</p>
 		<p>
 			<a href="/scrollingtext.html">scrollingtext.html</a> is scrollable text that includes the last few 
-			donations, designed for the bottom of the screen.  Configurable via javascript
+			donations, designed for the bottom of the screen.  Configurable via YAML settings
+		</p>
+		<p>
+			<a href="/videoplay.html">videoplay.html</a> is a simple player that auto-plays videos in the video folder,
+			 useful for commercial breaks.
 		</p>
 		<p>
 			This system also uses <a href="/dataupdate.py">a python script</a> to check and regularly update
-			from DonorDrive's servers using the API.  This way repeated requests in multiple widgets don't
-			overtax the api system
+			from DonorDrive's servers using the API, as well as build a list of videos for the player.  
+			This way repeated requests in multiple widgets don't overtax the api system.
+		</p>
+		<p>
+			Also, all of the configuration for these files can be found in 
+			<a href="/FSSConfig.yml">FSSConfig.yml</a> file, in YAML format.  See the comments for more information!
 		</p>
 		<p>&nbsp;</p>
 		<h2>
@@ -60,6 +68,10 @@
 		<p>
 			The source code for the mini webserver is on MiniWeb's sourceforge page 
 			<a href="http://miniweb.svn.sourceforge.net/viewvc/miniweb/">here</a>. 
+		</p>
+		<p>
+			The YAML interface for javascript can be found on it's github 
+			<a href="https://github.com/yaml/yaml.js-standalone">here</a>
 		</p>
 		<p>
 			The rest of this code can be found at the Fragforce github, specifically

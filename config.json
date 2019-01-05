@@ -1,0 +1,8 @@
+{
+		"Port": "8000",
+		"ParticipantID":  "300852",
+		"TeamID": "43926",
+		"UpdateInterval": 60,
+		"WebDir": "htdocs",
+		"VideoPath": "videos"
+	}

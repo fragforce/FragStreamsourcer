@@ -25,10 +25,15 @@
         <link href="fragforce.css" rel="stylesheet" type="text/css">
     </head>
     <body>
+        <script type="text/javascript" src="yaml.js"></script>
         <script type="text/javascript">
             
+            //load YAML data
+            var yamlConfig = YAML.load('FSSConfig.yml');
+
+            // load variables from config data
             // Blink interval, in milliseconds
-            var blinkInterval = 400;
+            var blinkInterval = yamlConfig.btBlinkInterval;
 
             (function() {
                 var blinks = document.getElementsByTagName('blink');

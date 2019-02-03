@@ -41,4 +41,12 @@ daValueSearch: teamlast
 # String above logo
 daAboveLogoString: "New Team Donation!"
 
+#
+# blinkingtext.html values
+#
+
+# Blink interval (ms)
+btBlinkInterval: 400
+
+
 ...

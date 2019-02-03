@@ -15,12 +15,12 @@
 			Introduction
 		</h2>
 		<p>
-			This is a mini-implementation of a web server combined with a simple python script that
+			This is a mini-implementation of a go-based web service  that
 			is designed to help local fragforce orgs get some neat stream widgets without having
 			to rely on an external service.
 		</p>
 		<p>
-			The system relies on a python script to pull donations from the team api and the user api records,
+			The system relies on the go script to pull donations from the team api and the user api records,
 			and keeps them locally, while the pages use JS to read those files and display the data accordingly.  
 			As this is a general webserver, additional non-data related pages can be created and used as widgets 
 			as well.
@@ -31,51 +31,43 @@
 		</h2>
 		<p>
 			<a href="/blinkingtext.html">blinkingtext.html</a> is a simple blinking text widget, configurable in
-			streamlabs via custom css
+			streamlabs via custom css.  Check the html comments for use instructions.
 		</p>
 		<p>
-			<a href="/donationalert.html">donationalert.html</a> is a fragforce branded alert for donations, with a
-			spinning fragforce logo and sound alerts for donations, configurable via YAML Settings
-		</p>
-		<p>
-			<a href="/scrollingtext.html">scrollingtext.html</a> is scrollable text that includes the last few 
-			donations, designed for the bottom of the screen.  Configurable via YAML settings
+			<a href="/scrollingtext.html">scrollingtext.html</a> is scrollable text that includes custom text and the last few 
+			donations, made to scroll across a portion of the screen.  Text and usage configurable via YAML settings.
 		</p>
 		<p>
 			<a href="/videoplay.html">videoplay.html</a> is a simple player that auto-plays videos in the video folder,
-			 useful for commercial breaks.
-		</p>
-		<p>
-			This system also uses <a href="/dataupdate.py">a python script</a> to check and regularly update
-			from DonorDrive's servers using the API, as well as build a list of videos for the player.  
-			This way repeated requests in multiple widgets don't overtax the api system.
+			 useful for commercial breaks.  Configurable via YAML settings
 		</p>
 		<p>
 			Also, all of the configuration for these files can be found in 
 			<a href="/FSSConfig.yml">FSSConfig.yml</a> file, in YAML format.  See the comments for more information!
+		</p>
+		<p>
+			<a href="/donationalert.html">donationalert.html (partially depricated)</a> is a fragforce branded alert for donations, with a
+			spinning fragforce logo and sound alerts for donations, configurable via YAML Settings.  Note that 
+			fragcenter alerts already has these alerts, so use this as a backup only.
 		</p>
 		<p>&nbsp;</p>
 		<h2>
 			Special Thanks
 		</h2>
 		<p>
-			The webserver used here here is MiniWeb, by Stanley Huang.  Thanks Stanley!
+			The original webserver used before our go conversion was MiniWeb, by Stanley Huang.  Thanks Stanley!
 		<p>
 		<p>&nbsp;</p>
 		<h2>
 			Source Code Links
 		</h2>
 		<p>
-			The source code for the mini webserver is on MiniWeb's sourceforge page 
-			<a href="http://miniweb.svn.sourceforge.net/viewvc/miniweb/">here</a>. 
-		</p>
-		<p>
 			The YAML interface for javascript can be found on it's github 
 			<a href="https://github.com/yaml/yaml.js-standalone">here</a>
 		</p>
 		<p>
-			The rest of this code can be found at the Fragforce github, specifically
-			<a href="https://github.com/fragforce/FragStreamsourcer">here</a>.
+			The rest of this code, along with other cool stuff, can be found at the Fragforce github, specifically
+			<a href="https://github.com/fragforce">here</a>.
 		</p>
 		
 		<hr>

@@ -9,6 +9,10 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"strings"
+	"fmt"
+	"bufio"
+	"os"
 )
 
 /*
@@ -34,7 +38,10 @@ var configuration Configuration
 //Generic "Bail and error" function.
 func check(e error) {
 	if e != nil {
-		log.Fatal(e)
+		fmt.Println(e)
+		fmt.Print("Press 'Enter' to stop process and fix error before restarting...")
+  		bufio.NewReader(os.Stdin).ReadBytes('\n') 
+		os.Exit(1)
 	}
 }
 
@@ -91,10 +98,17 @@ func main() {
 	log.Print("Server is starting up...")
 	var videos []string
 	configfilename := "config.json"
+	yamlfilename := "htdocs/FSSConfig.yml"
 
 	//Read config file
 	dat, err := ioutil.ReadFile(configfilename)
 	check(err)
+
+	//Read YAML file
+	ymltest, err := ioutil.ReadFile(yamlfilename)
+	check(err)
+
+	_ = ymltest
 
 	//Load config
 	json.Unmarshal(dat, &configuration)
@@ -104,7 +118,7 @@ func main() {
 	check(err)
 
 	for _, file := range files {
-		if file.Mode().IsRegular() {
+		if ( file.Mode().IsRegular() && strings.Contains( file.Name(), ".mp4" ) ) {
 			videos = append(videos, configuration.VideoPath+"/"+file.Name())
 		}
 	}

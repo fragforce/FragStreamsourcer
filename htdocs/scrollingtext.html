@@ -5,19 +5,34 @@
 
 	@dev - Ben Gray
 
-	TODO -- Move variables to ouside script maybe?
 -->
 <!DOCTYPE html>
 <html>
+	<script type="text/javascript" src="yaml.js"></script>
 	<script>
 		
-		/* User Editable Variables */
-		var checkInterval = 30000; // Time (ms) between checks for donation updates
-		// Donation source JSON, uncomment team or personal as you want
-		var jsonURL = '/teamdonations.json'; // for all team donations
-		//var jsonURL = '/persondonations.json'; // for personal donations only
-		var scrollStartString = 'Welcome to Fragforce!  Thanks to Donators:'; // string before list of donators
-		var numDonations = 2; // number of recent donations to loop through
+		//load YAML data
+		var yamlConfig = YAML.load('FSSConfig.yml');
+
+		// load variables from config data
+		// Time (ms) between checks for donation updates
+		var checkInterval = yamlConfig.stCheckInterval; 
+		// Donation source JSON
+		var jsonSource = yamlConfig.stValueSearch;
+		var jsonURL
+		if(jsonSource == 'teamlast') {
+			jsonURL =  '/teamdonations.json'; // for all team donations
+		} else if(jsonSource == 'personallast'){
+			jsonURL = '/persondonations.json'; // for personal donations only
+		} else if(jsonSource == 'personaltop'){
+			jsonURL = '/top10personal.json'; // for personal donations ranked by largest
+		} else {
+			jsonURL = ''; // default to null string, meaning no data pulled
+		}
+		// string before list of donators
+		var scrollStartString = yamlConfig.stStartString; 
+		// number of recent donations to loop through
+		var numDonations = yamlConfig.stNumDonations; 
 
 		/* System variables, don't edit */
 		var currentAPIRes;
@@ -25,37 +40,47 @@
 		
 		// method called to reset scroll loop
 		function getViaApi(){
-			const Http = new XMLHttpRequest();
-			const url = jsonURL;
-			Http.open( "GET", url );
-			Http.send();
-			Http.onreadystatechange=function(){
-				if( this.readyState==4 && this.status==200 ){
-					// send notification to console log
-					updateCount++;
-					console.log( 'success request #' + updateCount );
-					
-					//pull data from http response
-					currentAPIRes = JSON.parse(Http.responseText);
+			if(jsonURL != ''){
+				const Http = new XMLHttpRequest();
+				const url = jsonURL;
+				Http.open( "GET", url );
+				Http.send();
+				Http.onreadystatechange=function(){
+					if( this.readyState==4 && this.status==200 ){
+						// send notification to console log
+						updateCount++;
+						console.log( 'success request #' + updateCount );
+						
+						//pull data from http response
+						currentAPIRes = JSON.parse(Http.responseText);
 
-					// set variables
-					var lastDonator;
-					var lastAmount;
-					var i
+						// set variables
+						var lastDonator;
+						var lastAmount;
+						var i
 
-					// begin string with opening from variables
-					var scrollFinalString = scrollStartString;
+						// begin string with opening from variables
+						var scrollFinalString = scrollStartString;
 
-					// loop through x donations and add to string
-					for( i = 0; i < numDonations; i++ ){
-						lastDonator = currentAPIRes[i].displayName;
-						lastAmount = currentAPIRes[i].amount;
-						scrollFinalString += '    ' + lastDonator + ': $' + lastAmount;
+						// loop through x donations and add to string
+						for( i = 0; i < numDonations; i++ ){
+							lastDonator = currentAPIRes[i].displayName;
+							lastAmount = currentAPIRes[i].amount;
+							scrollFinalString += '    ' + lastDonator + ': $' + lastAmount;
+						}
+						
+						// finally populate string
+						document.getElementById("textscroll").innerHTML = scrollFinalString;
+					} else {
+						//bad send from HTTP response?  default to just start string, but log
+						console.log('Bad data from http request to local json.')
+						document.getElementById("textscroll").innerHTML = scrollStartString;
 					}
-					
-					// finally populate string
-					document.getElementById("textscroll").innerHTML = scrollFinalString;
 				}
+			} else {
+				// in case no json source is set in config (or bad source label), default to just prep string
+				console.log('Bad or empty json source in settings, defaulting to basic response');
+				document.getElementById("textscroll").innerHTML = scrollStartString;
 			}
 		}
 		// make first call and schedule future calls at interval

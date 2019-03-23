@@ -1,16 +1,17 @@
 # FragStreamsourcer
-Local web and python frontend to show neat Fragforce things on streams without having to deal with an outside service.
+Local web and go frontend to show neat Fragforce things on streams without having to deal with an outside service.  
 
-# Quick Start (Windows)
-1) install Python locally
-2) run the python script htdocs/dataupdate.py and let it continue to run while streaming
-3) run miniweb.exe and let run
-4) go to streamlabs and add sources!
+# Quick Start (All OSes)
+1) download everything
+2) rename FSSConfig.yml.sample to FSSConfig.yml (or create your own yml config based on that file)
+3) double click the fragstats executable for your OS to start the service
 
 # About adding sources
-to add any widget from this collection, simply create a new Browser Source widget, and set the url to point to the locally hosted HTML, using port 8000 if you are using miniweb.
+to add any widget from this collection, simply create a new Browser Source widget, and set the url to point to the locally hosted HTML using port 8000 (by default).
 
 Ex: for the scrolling text widget, set the url to "http://localhost:8000/scrollingtext.html"
+
+For information on the individual overlays and what they are, check out index.htm once you've started the server.
 
 # TODOS
 Honestly there are lots.  Check the individual html files for some info, or create issues here if you find a missing item you want to request!

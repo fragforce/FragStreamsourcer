@@ -1,0 +1,52 @@
+---
+# FSSConfig.yaml -- FragStreamsourcer Settings
+# Central configuration file for all FragStreamsourcer pages
+
+#
+# videoplay.html values
+#
+
+# Trigger for random sort of videos
+vpRandomSort: true
+
+#
+# scrollingtext.html values
+#
+
+# Check interval (ms) between checks of server for new donations
+stCheckInterval: 30000
+# Value type to search, one of three values:
+# teamlast - last donations to team
+# personallast - last donations to you (user)
+# personaltop - top 10 donations to you (user)
+# blank - just use stStartString, without a pull
+stValueSearch: teamlast
+# String at the beginning of the scroll text before donations
+stStartString: "Welcome to Fragforce!  Thanks to our most recent team donators:"
+# Number of donations to scroll at most
+stNumDonations: 2
+
+#
+# donationalert.html values
+#
+
+# Time (ms) between checks of server for new donations
+daCheckInterval: 10000
+# Time (ms) that donation popup is shown before fadeout
+daShowInterval: 6000
+# Value type to check for updates, one of two values:
+# teamlast - last donations to team
+# personallast - last donations to you (user)
+daValueSearch: teamlast
+# String above logo
+daAboveLogoString: "New Team Donation!"
+
+#
+# blinkingtext.html values
+#
+
+# Blink interval (ms)
+btBlinkInterval: 400
+
+
+...

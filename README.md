@@ -3,9 +3,8 @@ Local web and go frontend to show neat Fragforce things on streams without havin
 
 # Quick Start (All OSes)
 1) download everything
-2) put any videos you want for the commercial cycle in the htdocs/videos folder
-3) rename FSSConfig.yml.sample to FSSConfig.yml (or create your own yml config based on that file)
-4) double click the fragstats executable for your OS to start the service
+2) rename FSSConfig.yml.sample to FSSConfig.yml (or create your own yml config based on that file)
+3) double click the fragstats executable for your OS to start the service
 
 # About adding sources
 to add any widget from this collection, simply create a new Browser Source widget, and set the url to point to the locally hosted HTML using port 8000 (by default).

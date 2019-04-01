@@ -11,6 +11,24 @@
 	<script type="text/javascript" src="yaml.js"></script>
 	<script>
 		
+		function sortJsonArrayByProperty(objArray, prop, direction){
+		    if (arguments.length<2) throw new Error("sortJsonArrayByProp requires 2 arguments");
+		    var direct = arguments.length>2 ? arguments[2] : 1; //Default to ascending
+		    if (objArray && objArray.constructor===Array){
+		        console.log('proppath: ' + prop);
+		        objArray.sort(function(a,b){
+                    a = a[prop];
+                    b = b[prop];
+		            // convert numeric strings to integers
+		            a = String(a).match(/^\d+$/) ? +a : a;
+		            b = String(b).match(/^\d+$/) ? +b : b;
+		            return ( (a < b) ? -1*direct : ((a > b) ? 1*direct : 0) );
+		        });
+		        console.log('sorted array size: ' + objArray.length);
+		    }
+		    return objArray;
+		}
+
 		//load YAML data
 		var yamlConfig = YAML.load('FSSConfig.yml');
 
@@ -19,16 +37,13 @@
 		var checkInterval = yamlConfig.stCheckInterval; 
 		// Donation source JSON
 		var jsonSource = yamlConfig.stValueSearch;
-		var jsonURL
-		if(jsonSource == 'teamlast') {
-			jsonURL =  '/teamdonations.json'; // for all team donations
-		} else if(jsonSource == 'personallast'){
-			jsonURL = '/persondonations.json'; // for personal donations only
-		} else if(jsonSource == 'personaltop'){
-			jsonURL = '/top10personal.json'; // for personal donations ranked by largest
+		if(jsonSource == 'teamlast' || jsonSource == 'teamtop'){
+			var jsonURL =  '/teamdonations.json'; // for all team donations
 		} else {
-			jsonURL = ''; // default to null string, meaning no data pulled
+			jsonURL = '';
 		}
+
+		
 		// string before list of donators
 		var scrollStartString = yamlConfig.stStartString; 
 		// number of recent donations to loop through
@@ -36,6 +51,7 @@
 
 		/* System variables, don't edit */
 		var currentAPIRes;
+		var initialAPIRes;
 		var updateCount = 0;
 		
 		// method called to reset scroll loop
@@ -53,6 +69,14 @@
 						
 						//pull data from http response
 						currentAPIRes = JSON.parse(Http.responseText);
+
+						if(jsonSource == 'teamlast') {
+							currentAPIRes = sortJsonArrayByProperty(currentAPIRes, 'created', -1);
+						} else if(jsonSource == 'teamtop'){
+							currentAPIRes = sortJsonArrayByProperty(currentAPIRes, 'amount', -1);
+						} else {
+							jsonURL = ''; // default to null string, meaning no data pulled
+						}
 
 						// set variables
 						var lastDonator;

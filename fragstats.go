@@ -48,10 +48,7 @@ func check(e error) {
 //This is a goroutine that spawns off to update stats
 func pollstats() {
 
-	tdjson := "https://www.extra-life.org/api/teams/" + configuration.TeamID + "/donations"
-	udjson := "https://www.extra-life.org/api/participants/" + configuration.ParticipantID + "/donations"
-	topjson := "https://www.extra-life.org/api/participants/" + configuration.ParticipantID + "/donations?orderBy=amount%20desc&limit=10"
-	lastjson := "https://www.extra-life.org/api/participants/" + configuration.ParticipantID + "/donations?orderBy=createdDateUTC%20desc&limit=5"
+	tdjson := "https://fragforce.org/d/donations"
 
 	var netClient = &http.Client{
 		//The default timeout is way too long, hopefully it won't come to this.
@@ -59,7 +56,7 @@ func pollstats() {
 	}
 
 	for {
-		log.Print("Polling DonorDrive API for updated stats")
+		log.Print("Polling Fragforce.org for updated stats")
 
 		resp, err := netClient.Get(tdjson)
 		check(err)
@@ -68,26 +65,6 @@ func pollstats() {
 		log.Print("Updating team total. Read ", len(body), " bytes from server.")
 		err = ioutil.WriteFile(configuration.WebDir+"/teamdonations.json", body, 0644)
 
-		resp, err = netClient.Get(udjson)
-		check(err)
-		defer resp.Body.Close()
-		body, err = ioutil.ReadAll(resp.Body)
-		log.Print("Updating user total. Read ", len(body), " bytes from server.")
-		err = ioutil.WriteFile(configuration.WebDir+"/persondonations.json", body, 0644)
-
-		resp, err = netClient.Get(topjson)
-		check(err)
-		defer resp.Body.Close()
-		body, err = ioutil.ReadAll(resp.Body)
-		log.Print("Updating top 10 personal donations. Read ", len(body), " bytes from server.")
-		err = ioutil.WriteFile(configuration.WebDir+"/top10personal.json", body, 0644)
-
-		resp, err = netClient.Get(lastjson)
-		check(err)
-		defer resp.Body.Close()
-		body, err = ioutil.ReadAll(resp.Body)
-		log.Print("Updating last 5 personal donations. Read ", len(body), " bytes from server.")
-		err = ioutil.WriteFile(configuration.WebDir+"/last5personal.json", body, 0644)
 
 		//Sleep it off between requests
 		time.Sleep(time.Second * time.Duration(configuration.UpdateInterval))

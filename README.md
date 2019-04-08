@@ -1,3 +1,7 @@
+# Deprecated Project
+* Functionality is now built into fragforce.org at https://fragforce.org/static/ffsite/overlays/scrolltext.html
+* Code at https://github.com/fragforce/fragforce.org/blob/dev/ffsite/static/ffsite/overlays/scrolltext.html
+
 # FragStreamsourcer
 Local web and go frontend to show neat Fragforce things on streams without having to deal with an outside service.  
 
